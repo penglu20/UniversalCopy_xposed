@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pl.universalcopy">
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <application
+        android:name=".UCXPApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="587759ca3eae251cf80005fd" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
+
+        <activity android:name=".MainActivity"
+            android:theme="@style/BaseAppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".copy.CopyActivity"
+            android:autoRemoveFromRecents="true"
+            android:clearTaskOnLaunch="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:theme="@style/OverlayTheme" />
+
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="Xposed方式实现的全局复制功能，可以复制大部分文字。如果你还需要复制之后进行分词，可以下载“全能分词”或者“锤子Bigbang”。" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="30" />
+
+        <receiver
+            android:name=".WakeUpBR"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="universal_copy_wake_up_action" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".NotifyService" />
+
+        <activity
+            android:name=".DonateActivity"
+            android:theme="@style/BaseAppTheme" />
+
+        <activity
+            android:name=".HowToUseActivity"
+            android:theme="@style/BaseAppTheme" />
+
+        <activity android:name=".UniversalCopyActiity"
+            android:theme="@style/ScreenCaptureTheme"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:autoRemoveFromRecents="true"
+            android:exported="true"
+            ></activity>
+
+        <service android:name=".GlobalCopyTile"
+            android:label="@string/notify_copy_title"
+            android:icon="@drawable/notify_copy"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

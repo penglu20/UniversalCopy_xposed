@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+    defaultConfig {
+        applicationId "com.pl.universalcopy"
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "for_test"]
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile.name.contains("release")) {
+                        if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                            // 输出apk名称为boohee_v1.0_2015-01-15_wandoujia.apk
+                            def fileName = "BigBang_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                            output.outputFile = new File(outputFile.parent, fileName)
+                        }
+                    }
+                }
+            }
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+    }
+    productFlavors {
+        coolapk {}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    provided 'de.robv.android.xposed:api:82'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+}

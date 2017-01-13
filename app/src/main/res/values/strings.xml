@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">全局复制——Xposed</string>
+
+
+    <string name="notify_copy_title">全局\n复制</string>
+
+    <string name="select_all">全选</string>
+    <string name="select_mode">多选</string>
+    <string name="set_selection">设置为</string>
+    <string name="select_cancel">取消选择</string>
+
+    <string name="action_copy">"复制"</string>
+    <string name="action_full_screen">"全屏选择"</string>
+    <string name="action_select_mode">"查看已选"</string>
+
+    <string name="error_in_copy">出现错误，请重试</string>
+    <string name="error_in_permission">请给开启辅助模式，可长按悬浮球设置</string>
+    <string name="copy_title">全局复制</string>
+    <string name="copy_subtitle">请点击想要复制的区域</string>
+
+
+    <string name="total_switch">使用服务</string>
+    <string name="notify">通知栏显示开关</string>
+    <string name="key_trigger">音量增+音量减触发</string>
+    <string name="long_key_trigger">长按返回键触发</string>
+
+    <string name="introduction">如何使用</string>
+
+    <string name="donate">我请作者吃辣条</string>
+    <string name="donate_now">点击跳转支付宝</string>
+    <string name="not_foud_qq">未找到QQ</string>
+    <string name="my_zhifubao">我的支付宝二维码</string>
+    <string name="my_weixin">我的微信二维码</string>
+    <string name="thinks_for_donate">有您的支持，我们会越做越好的</string>
+    <string name="picture_saved">二维码已保存到本地相册</string>
+    <string name="click_to_save_qrcord">点击二维码保存到相册</string>
+
+    <string name="about_universal_copy">为什么全局复制在有些页面没有用</string>
+    <string name="about_universal_copy_msg">\t\t\t\t全局复制的原理是去抓取当前页面中的文字信息，以下情况可能会导致全局复制抓不到文字：\n\t\t\t\t
+1.如果应用中的文字不是使用标准文字组件，则无法抓取文字，比如浏览器和微信QQ的消息界面等，此时可以考虑使用普通复制。\n\t\t\t\t
+2.一些看似是文字的内容，其实是当成图片绘制的，所以也抓不到文字信息，比如锤子桌面、iReader等。</string>
+
+
+
+    <string name="overall_intro">软件功能介绍</string>
+    <string name="overall_intro_msg">\t\t\t\t
+       所谓全局复制，就是在一些本来不能复制的页面也能够复制，增大了复制功能了适用范围，比如在系统设置页面也可以复制，本应用需要xposed框架支持。\n\t\t\t\t
+        如果你还需要对复制到的词语进行处理，比如分词、快速编辑、搜索、翻译等，可以下载“全能分词”或者“锤子Bigbang＂应用，该应用包含本应用的功能，还有更多玩法。
+    </string>
+
+    <string name="about_xposed">关于多种触发方式的设置</string>
+    <string name="about_xposed_msg">\t\t\t\t我们提供了通知栏、组合音量键、长按返回键，三种触发全局复制的方式。\n\t\t\t\t
+        你可以根据自己的需要进行自由选择，个人建议是使用组合音量键触发，因为有些应用对返回键做了特殊处理，导致我们无法获取，比如微信和QQ。\n\t\t\t\t
+        修改设置以后，最好重启生效，否则可能会造成一些副作用。
+    </string>
+
+
+    <string name="open_from_outside">如何通过外部应用触发功能</string>
+    <string name="open_from_outside_msg">如果你对我们提供的这几种触发方法仍然不满意，或者你使用了第三方的自定义开关(比如悬浮菜单)，可以将我们的开关集成进去，方法如下：\n
+    包名：\n\tcom.pl.universalcopy\n\n
+    类名：\n\tcom.pl.universalcopy.UniversalCopyActiity\n\n
+
+        提示：本页面可以通过全局复制来复制包名和类名。
+    </string>
+
+
+</resources>
