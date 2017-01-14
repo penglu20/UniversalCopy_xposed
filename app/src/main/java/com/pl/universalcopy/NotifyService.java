@@ -50,7 +50,8 @@ public class NotifyService extends Service {
 
     private void adjustService() {
         boolean isForground = SPHelper.getBoolean(Constant.IS_UNIVERSAL_COPY_FOREGROUND, true);
-        if (isForground) {
+        boolean totalSwitch = SPHelper.getBoolean(Constant.TOTAL_SWITCH, true);
+        if (isForground && totalSwitch) {
             startForeground("",true);
         } else {
             stopForeground(true);
@@ -73,8 +74,8 @@ public class NotifyService extends Service {
         Intent notificationIntent = new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, 0);
         builder.setContentIntent(pendingIntent);
-        builder.setContentTitle(getString(R.string.app_name));
-        builder.setContentText(getString(R.string.copy_title));
+        builder.setContentTitle(getString(R.string.copy_title));
+        builder.setContentText(getString(R.string.copy_msg));
         builder.setPriority(NotificationCompat.PRIORITY_MIN);
 
         Notification notification;
@@ -96,8 +97,11 @@ public class NotifyService extends Service {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent notificationIntent = new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP);
-                    sendBroadcast(notificationIntent);
+                    boolean totalSwitch = SPHelper.getBoolean(Constant.TOTAL_SWITCH, true);
+                    if (totalSwitch) {
+                        Intent notificationIntent = new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP);
+                        sendBroadcast(notificationIntent);
+                    }
                 }
             },500);
         }

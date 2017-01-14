@@ -56,11 +56,11 @@ public class XposedUniversalCopy implements IXposedHookLoadPackage {
         XSharedPreferences appXSP;
         appXSP = new XSharedPreferences(PACKAGE_NAME, SP_NAME);
         appXSP.makeWorldReadable();
-        boolean enabled =appXSP.getBoolean(IS_UNIVERSAL_COPY_ENABLE,true);
-
-        if (!enabled){
-            return;
-        }
+//        boolean enabled =appXSP.getBoolean(IS_UNIVERSAL_COPY_ENABLE,true);
+//
+//        if (!enabled){
+//            return;
+//        }
         mFilters.add(new Filter.TextViewValidFilter());
         //优化微信 下的体验。
         if ("com.tencent.mm".equals(loadPackageParam.packageName)) {

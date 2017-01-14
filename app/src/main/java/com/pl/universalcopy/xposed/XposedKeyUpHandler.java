@@ -43,7 +43,8 @@ public class XposedKeyUpHandler {
     Runnable longPressRunnable=new Runnable() {
         @Override
         public void run() {
-            Intent notificationIntent = new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP);
+            //转发到notifyService中，判断是否开启功能，再去触发
+            Intent notificationIntent = new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP_DELAY);
             try {
                 mContext.sendBroadcast(notificationIntent);
             } catch (Throwable e) {
