@@ -39,13 +39,27 @@ public class NotifyService extends Service {
         //只有在同意使用了以后才开始service
         super.onCreate();
         IntentFilter intentFilter=new IntentFilter(UNIVERSAL_COPY_BROADCAST_XP_DELAY);
-        registerReceiver(mUniversalCopyBR,intentFilter);
+        try {
+            registerReceiver(mUniversalCopyBR,intentFilter);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         adjustService();
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            unregisterReceiver(mUniversalCopyBR);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        super.onDestroy();
     }
 
     private void adjustService() {
@@ -101,6 +115,9 @@ public class NotifyService extends Service {
                     if (totalSwitch) {
                         Intent notificationIntent = new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP);
                         sendBroadcast(notificationIntent);
+                        if (! SPHelper.getBoolean(Constant.IS_UNIVERSAL_COPY_FOREGROUND, true)){
+                            stopSelf();
+                        }
                     }
                 }
             },500);

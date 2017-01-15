@@ -9,7 +9,16 @@ public class UniversalCopyActiity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sendBroadcast(new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP_DELAY));
+        try {
+            startService(new Intent(this,NotifyService.class));
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        try {
+            sendBroadcast(new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP_DELAY));
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         finish();
         return;
     }

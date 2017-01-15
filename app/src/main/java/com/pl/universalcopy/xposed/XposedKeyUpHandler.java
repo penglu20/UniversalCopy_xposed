@@ -1,5 +1,6 @@
 package com.pl.universalcopy.xposed;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
@@ -44,9 +45,11 @@ public class XposedKeyUpHandler {
         @Override
         public void run() {
             //转发到notifyService中，判断是否开启功能，再去触发
-            Intent notificationIntent = new Intent(Constant.UNIVERSAL_COPY_BROADCAST_XP_DELAY);
+            Intent notificationIntent = new Intent();
+            notificationIntent.setComponent(new ComponentName(Constant.PACKAGE_NAME,Constant.OUT_SIDE_CALL_ACTIVITY_NAME));
+            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             try {
-                mContext.sendBroadcast(notificationIntent);
+                mContext.startActivity(notificationIntent);
             } catch (Throwable e) {
                 e.printStackTrace();
             }

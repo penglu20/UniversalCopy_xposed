@@ -8,6 +8,7 @@ public class Constant {
 
     public static final String SP_NAME = "sp_name";
     public static final String PACKAGE_NAME = "com.pl.universalcopy";
+    public static final String OUT_SIDE_CALL_ACTIVITY_NAME = "com.pl.universalcopy.UniversalCopyActiity";
 
     //xp全局复制
     public static final String UNIVERSAL_COPY_BROADCAST_XP="com_pl_universal_copy_broadcast_xp";
