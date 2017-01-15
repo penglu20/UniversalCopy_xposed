@@ -10,8 +10,8 @@ public class Constant {
     public static final String PACKAGE_NAME = "com.pl.universalcopy";
 
     //xp全局复制
-    public static final String UNIVERSAL_COPY_BROADCAST_XP="universal_copy_broadcast_xp";
-    public static final String UNIVERSAL_COPY_BROADCAST_XP_DELAY="universal_copy_broadcast_xp_delay";
+    public static final String UNIVERSAL_COPY_BROADCAST_XP="com_pl_universal_copy_broadcast_xp";
+    public static final String UNIVERSAL_COPY_BROADCAST_XP_DELAY="com_pl_universal_copy_broadcast_xp_delay";
     public static final String IS_FULL_SCREEN_COPY="is_full_screen_copy";
     public static final String IS_UNIVERSAL_COPY_FOREGROUND="is_universal_copy_foreground";
     public static final String IS_UNIVERSAL_COPY_ENABLE="is_universal_copy_enable";

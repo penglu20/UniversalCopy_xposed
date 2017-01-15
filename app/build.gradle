@@ -21,8 +21,8 @@ android {
             debuggable true
         }
         release {
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
@@ -30,7 +30,7 @@ android {
                     if (outputFile.name.contains("release")) {
                         if (outputFile != null && outputFile.name.endsWith('.apk')) {
                             // 输出apk名称为boohee_v1.0_2015-01-15_wandoujia.apk
-                            def fileName = "BigBang_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                            def fileName = "UC_XP_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
                             output.outputFile = new File(outputFile.parent, fileName)
                         }
                     }
