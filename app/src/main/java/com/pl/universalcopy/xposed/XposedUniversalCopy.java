@@ -66,7 +66,9 @@ public class XposedUniversalCopy implements IXposedHookLoadPackage {
         if ("com.tencent.mm".equals(loadPackageParam.packageName)) {
             //朋友圈内容拦截。
             mFilters.add(new Filter.WeChatValidFilter(loadPackageParam.classLoader));
-            //聊天详情中的文字点击事件优化
+            mFilters.add(new Filter.WeChatCellTextViewFilter(loadPackageParam.classLoader));
+
+          //聊天详情中的文字点击事件优化
         }
 
         mUniversalCopyHandler.setFilters(mFilters);

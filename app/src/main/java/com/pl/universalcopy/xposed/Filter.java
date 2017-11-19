@@ -36,6 +36,83 @@ public interface Filter {
         }
     }
 
+    class EditTextFilter implements Filter {
+
+        @Override public boolean filter(View view) {
+            return (view instanceof EditText);
+            //            return (view instanceof TextView || view instanceof AppCompatTextView) && !(view instanceof Button)
+            //                    && !(view instanceof EditText)
+            //                    && !(view instanceof CheckedTextView)
+            //                    && !(view instanceof DigitalClock)
+            //                    && !(view instanceof Chronometer);
+        }
+
+        @Override public String getContent(View view) {
+            if (view instanceof EditText) {
+                CharSequence text = ((TextView) view).getText();
+                return text == null ? null : text.toString();
+            }
+            return null;
+        }
+    }
+
+    class WeChatCellTextViewFilter implements Filter {
+
+        private static final String TAG = "WeChatCellTextViewFilter";
+        Class staticTextViewClass;
+        private Method getTextMethod;
+
+        WeChatCellTextViewFilter(ClassLoader classLoader) {
+            try {
+                staticTextViewClass =
+                    classLoader.loadClass("com.tencent.mm.ui.widget.celltextview.CellTextView");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override public boolean filter(View view) {
+            if (staticTextViewClass != null) {
+                return staticTextViewClass.isInstance(view);
+            }
+            return false;
+        }
+
+        @Override public String getContent(View view) {
+            if (view instanceof TextView) {
+                return null;
+            }
+            if (staticTextViewClass != null) {
+                try {
+                    try {
+                        getTextMethod = staticTextViewClass.getMethod("cgv");
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                        Method[] methods = staticTextViewClass.getDeclaredMethods();
+                        if (methods != null) {
+                            for (Method method : methods) {
+                                if (method.getReturnType().equals(String.class)
+                                    && method.getParameterTypes().length == 0) {
+                                    getTextMethod = method;
+                                }
+                            }
+                        }
+                    }
+                    if (getTextMethod != null) {
+                        Object invoke = getTextMethod.invoke(view);
+                        if (invoke != null) {
+                            return invoke.toString();
+                        }
+                    }
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
     class WeChatValidFilter implements Filter {
 
         private static final String TAG = "WeChatValidFilter";
