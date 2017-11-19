@@ -140,10 +140,10 @@ public class CopyActivity extends BaseActivity {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //        layoutParams.topMargin = (int) (this.actionBarHeight - ViewUtil.dp2px(44));
         var1.setLayoutParams(layoutParams);
-        TextView var4 = (TextView)var1.findViewById(R.id.text);
-        var4.setText(getSelectedText());
-//        var4.setText(new SpannableString(getSelectedText()), TextView.BufferType.NORMAL);
-        var4.setCustomSelectionActionModeCallback(new MySelectionActionModeCallback(var4));
+        TextView textView = (TextView)var1.findViewById(R.id.text);
+        textView.setText(getSelectedText());
+//        textView.setText(new SpannableString(getSelectedText()), TextView.BufferType.NORMAL);
+//        textView.setCustomSelectionActionModeCallback(new MySelectionActionModeCallback(textView));
         ((FloatingActionButton)var1.findViewById(R.id.fab_copy)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

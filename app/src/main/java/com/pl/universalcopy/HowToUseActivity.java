@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.pl.universalcopy.utils.StatusBarCompat;
 
 
-public class HowToUseActivity extends AppCompatActivity {
+public class HowToUseActivity extends BaseActivity {
     public static final String GO_TO_OPEN_FROM_OUTER="go_to_open_from_outer";
 
     private View introMenu;

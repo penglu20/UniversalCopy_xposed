@@ -3,8 +3,8 @@ def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.pl.universalcopy"
         minSdkVersion 14
@@ -26,12 +26,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile.name.contains("release")) {
-                        if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    def outputFile = output.outputFileName
+                    if (outputFile != null && outputFile.contains("release")) {
+                        if (outputFile.endsWith('.apk')) {
                             // 输出apk名称为boohee_v1.0_2015-01-15_wandoujia.apk
                             def fileName = "UC_XP_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
-                            output.outputFile = new File(outputFile.parent, fileName)
+                            output.outputFileName = fileName
                         }
                     }
                 }
@@ -40,6 +40,7 @@ android {
             debuggable false
         }
     }
+    flavorDimensions "universal_copy"
     productFlavors {
         coolapk {}
     }
@@ -51,7 +52,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     provided 'de.robv.android.xposed:api:82'
-    compile 'com.android.support:design:24.2.0'
-    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
 }
