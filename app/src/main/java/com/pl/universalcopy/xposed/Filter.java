@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -79,7 +80,7 @@ public interface Filter {
         }
 
         @Override public String getContent(View view) {
-            if (view instanceof TextView) {
+            if (!staticTextViewClass.isInstance(view)) {
                 return null;
             }
             if (staticTextViewClass != null) {
@@ -136,7 +137,7 @@ public interface Filter {
 
         @Override
         public String getContent(View view) {
-            if (view instanceof TextView) {
+            if (!staticTextViewClass.isInstance(view)) {
                 return null;
             }
             if (staticTextViewClass != null) {
@@ -152,6 +153,63 @@ public interface Filter {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
+    class WeChatValidNoMeasuredTextViewFilter implements Filter {
+
+        private static final String TAG = "WeChatValidNoMeasuredTextViewFilter";
+        Class staticTextViewClass;
+        private Field getTextField;
+
+        WeChatValidNoMeasuredTextViewFilter(ClassLoader classLoader) {
+            try {
+                staticTextViewClass = classLoader.loadClass("com.tencent.mm.ui.base.NoMeasuredTextView");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public boolean filter(View view) {
+            if (staticTextViewClass != null) {
+                return staticTextViewClass.isInstance(view);
+            }
+            return false;
+        }
+
+        @Override
+        public String getContent(View view) {
+            if (!staticTextViewClass.isInstance(view)) {
+                return null;
+            }
+            if (staticTextViewClass != null) {
+                try {
+                    try {
+                        getTextField = staticTextViewClass.getDeclaredField("mText");
+                        getTextField.setAccessible(true);
+                    } catch (NoSuchFieldException e) {
+                        e.printStackTrace();
+                        Field[] fields = staticTextViewClass.getDeclaredFields();
+                        if (fields != null) {
+                            for (Field method : fields) {
+                                if (method.getType().isInstance(CharSequence.class)) {
+                                    getTextField = method;
+                                    getTextField.setAccessible(true);
+                                }
+                            }
+                        }
+                    }
+                    if (getTextField != null) {
+                        Object invoke = getTextField.get(view);
+                        if (invoke != null) {
+                            return invoke.toString();
+                        }
+                    }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

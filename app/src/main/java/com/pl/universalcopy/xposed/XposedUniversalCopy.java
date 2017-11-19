@@ -67,6 +67,7 @@ public class XposedUniversalCopy implements IXposedHookLoadPackage {
             //朋友圈内容拦截。
             mFilters.add(new Filter.WeChatValidFilter(loadPackageParam.classLoader));
             mFilters.add(new Filter.WeChatCellTextViewFilter(loadPackageParam.classLoader));
+            mFilters.add(new Filter.WeChatValidNoMeasuredTextViewFilter(loadPackageParam.classLoader));
 
           //聊天详情中的文字点击事件优化
         }
