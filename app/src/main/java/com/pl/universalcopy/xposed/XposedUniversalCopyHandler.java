@@ -22,8 +22,12 @@ import android.widget.Toast;
 import com.pl.universalcopy.Constant;
 import com.pl.universalcopy.copy.CopyNode;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.pl.universalcopy.Constant.UNIVERSAL_COPY_BROADCAST_XP;
 
@@ -39,6 +43,11 @@ public class XposedUniversalCopyHandler {
     IntentFilter intentFilter=new IntentFilter(UNIVERSAL_COPY_BROADCAST_XP);
     Handler handler;
     List<Filter> mFilters;
+    private Object activityThreadObject = null;
+
+    public void setActivityThreadObject(Object activityThreadObject) {
+        this.activityThreadObject = activityThreadObject;
+    }
 
     public void setFilters(List<Filter> mFilters) {
         this.mFilters = mFilters;
@@ -75,9 +84,30 @@ public class XposedUniversalCopyHandler {
                 if (top!=null){
                     String name=top.getClassName();
                     for (Activity activity:mActivities){
-                        if (activity.getClass().getName().equals(name)){
+                        if (activity.getClass().getName().equals(name) && !activity.isFinishing()){
                             topActivity=activity;
                             break;
+                        }
+                    }
+                    if (topActivity==null && activityThreadObject!=null){
+                        Class clazz = Class.forName("android.app.ActivityThread");
+                        Field field = clazz.getDeclaredField("mActivities") ;
+                        field.setAccessible(true);
+                        Map mActivities = (Map) field.get(activityThreadObject);
+                        if (mActivities!=null) {
+                            Set set = mActivities.entrySet();
+                            Iterator iterator = set.iterator();
+                            Class recordClass = Class.forName("android.app.ActivityThread$ActivityClientRecord");
+                            Field activityField = recordClass.getDeclaredField("activity");
+                            activityField.setAccessible(true);
+                            while (iterator.hasNext()) {
+                                Activity activity = (Activity) activityField.get(
+                                    ((Map.Entry) iterator.next()).getValue());
+                                if (activity.getClass().getName().equals(name)) {
+                                    topActivity = activity;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -89,6 +119,7 @@ public class XposedUniversalCopyHandler {
             if (mActivities.size()>0) {
                 topActivity = mActivities.get(mActivities.size() - 1);
                 if (topActivity.isFinishing()){
+                    mActivities.remove(topActivity);
                     topActivity=null;
                 }
             }
@@ -156,7 +187,7 @@ public class XposedUniversalCopyHandler {
 
         if(!isSuccess) {
             try {
-                Toast.makeText(activity, "error" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "无法启动全局复制，可能当前应用做了防Xposed注入" , Toast.LENGTH_SHORT).show();
             } catch (Throwable e) {
                 e.printStackTrace();
             }

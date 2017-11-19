@@ -52,7 +52,7 @@ public class DonateActivity extends BaseActivity {
                     sendBrodcast4Update(file);
                     return;
                 }else {
-                    InputStream is=getResources().openRawResource(R.drawable.alipay);
+                    InputStream is=getResources().openRawResource(R.raw.alipay);
                     try {
                         IOUtil.saveToFile(is,file);
                         ToastUtil.show(R.string.picture_saved);
@@ -73,7 +73,7 @@ public class DonateActivity extends BaseActivity {
                     sendBrodcast4Update(file);
                     return;
                 }else {
-                    InputStream is=getResources().openRawResource(R.drawable.wechat);
+                    InputStream is=getResources().openRawResource(R.raw.wechat);
                     try {
                         IOUtil.saveToFile(is,file);
                         ToastUtil.show(R.string.picture_saved);

@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/wechat" />
+            android:src="@raw/wechat" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/alipay" />
+            android:src="@raw/alipay" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/select_pic"
