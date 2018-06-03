@@ -79,26 +79,26 @@ public class XposedUniversalCopy implements IXposedHookLoadPackage {
     // installer  不注入。 防止代码出错。进不去installer 中。
     if (!"de.robv.android.xposed.installer".equals(loadPackageParam.packageName)
         && !"com.android.systemui".equals(loadPackageParam.packageName)) {
-      try {
-        findAndHookMethod(Class.forName("android.app.ActivityThread"), "handleResumeActivity",
-            IBinder.class, boolean.class, boolean.class, boolean.class, int.class, String.class,
-            new UniversalCopyActivityThreadHook());
-      } catch (Throwable e) {
-        e.printStackTrace();
-      }
-      try {
-        findAndHookMethod(Class.forName("android.app.ActivityThread"), "handleResumeActivity",
-            IBinder.class, boolean.class, boolean.class, boolean.class,
-            new UniversalCopyActivityThreadHook());
-      } catch (Throwable e) {
-        e.printStackTrace();
-      }
-      try {
-        findAndHookMethod(Class.forName("android.app.ActivityThread"), "handleResumeActivity",
-            IBinder.class, boolean.class, boolean.class, new UniversalCopyActivityThreadHook());
-      } catch (Throwable e) {
-        e.printStackTrace();
-      }
+//      try {
+//        findAndHookMethod(Class.forName("android.app.ActivityThread"), "handleResumeActivity",
+//            IBinder.class, boolean.class, boolean.class, boolean.class, int.class, String.class,
+//            new UniversalCopyActivityThreadHook());
+//      } catch (Throwable e) {
+//        e.printStackTrace();
+//      }
+//      try {
+//        findAndHookMethod(Class.forName("android.app.ActivityThread"), "handleResumeActivity",
+//            IBinder.class, boolean.class, boolean.class, boolean.class,
+//            new UniversalCopyActivityThreadHook());
+//      } catch (Throwable e) {
+//        e.printStackTrace();
+//      }
+//      try {
+//        findAndHookMethod(Class.forName("android.app.ActivityThread"), "handleResumeActivity",
+//            IBinder.class, boolean.class, boolean.class, new UniversalCopyActivityThreadHook());
+//      } catch (Throwable e) {
+//        e.printStackTrace();
+//      }
 
       findAndHookMethod(Activity.class, "onStart", new UniversalCopyOnStartHook());
       findAndHookMethod(Activity.class, "onStop", new UniversalCopyOnStopHook());
